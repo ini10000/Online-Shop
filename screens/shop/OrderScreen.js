@@ -1,13 +1,48 @@
-import React from "react";
-import { View, FlatList, Platform } from "react-native";
-import { useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import {
+  View,
+  FlatList,
+  Platform,
+  ActivityIndicator,
+  Text,
+  StyleSheet
+} from "react-native";
+import { useSelector, useDispatch } from "react-redux";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 
 import HeaderButton from "../../components/UI/HeaderButton";
 import OrderItem from "../../components/shop/OrderItem";
+import Colors from "../../constants/Colors";
+import * as orderActions from "../../store/actions/orders";
 
 const OrdersScreen = props => {
+  const [isLoading, setIsLoading] = useState(false);
   const orders = useSelector(state => state.orders.orders);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    setIsLoading(true);
+    dispatch(orderActions.fetchOrders()).then(() => {
+      setIsLoading(false);
+    });
+  }, [dispatch]);
+
+  if (isLoading) {
+    return (
+      <View style={styles.loading}>
+        <ActivityIndicator size="large" color={Colors.primary} />
+      </View>
+    );
+  }
+
+  if (orders.length === 0) {
+    return (
+      <View style={styles.loading}>
+        <Text>No order found. Maybe start ordering some!</Text>
+      </View>
+    );
+  }
+
   return (
     <FlatList
       data={orders}
@@ -38,4 +73,11 @@ OrdersScreen.navigationOptions = navData => {
   };
 };
 
+const styles = StyleSheet.create({
+  loading: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center"
+  }
+});
 export default OrdersScreen;
