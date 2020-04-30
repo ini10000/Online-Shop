@@ -18,7 +18,13 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
+      "bundleIdentifier": "com.investnaira.investnaira",
+      "buildNumber": "1.0.0",
       "supportsTablet": true
+    },
+    "android": {
+      "package": "com.investnaira.investnaira",
+      "versionCode": 1
     }
   }
 }
