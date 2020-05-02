@@ -4,15 +4,15 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  Platform
+  Platform,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
-const CartItem = props => {
+const CartItem = (props) => {
   return (
     <View style={styles.cartItem}>
       <Text style={styles.itemData}>
-        <Text style={styles.quantity}>{props.quantity}</Text>
+        <Text style={styles.quantity}>{`${props.quantity} `}</Text>
         <Text style={styles.mainText}>{props.title}</Text>
       </Text>
       <View style={styles.itemData}>
@@ -40,25 +40,26 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     flexDirection: "row",
     justifyContent: "space-between",
-    marginHorizontal: 20
+    marginHorizontal: 10,
   },
   itemData: {
     flexDirection: "row",
-    alignItems: "center"
+    alignItems: "center",
+    justifyContent: "space-between",
   },
   quantity: {
     fontFamily: "open-sans",
     color: "#888",
     fontSize: 16,
-    marginHorizontal: 10
+    marginHorizontal: 10,
   },
   mainText: {
     fontFamily: "open-sans-bold",
-    fontSize: 16
+    fontSize: 16,
   },
   deleteButton: {
-    marginLeft: 20
-  }
+    marginLeft: 20,
+  },
 });
 
 export default CartItem;
