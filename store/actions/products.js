@@ -35,7 +35,7 @@ export const fetchProducts = () => {
       dispatch({
         type: SET_PRODUCTS,
         products: loadedProducts,
-        userProducts: loadedProducts.filter(prod => prod.ownerId === userId)
+        userProducts: loadedProducts.filter((prod) => prod.ownerId === userId),
       });
     } catch (err) {
       throw err;
@@ -43,7 +43,7 @@ export const fetchProducts = () => {
   };
 };
 
-export const deleteProduct = productId => {
+export const deleteProduct = (productId) => {
   return async (dispatch, getState) => {
     const token = getState().auth.token;
 
@@ -51,7 +51,7 @@ export const deleteProduct = productId => {
       `https://online-shop-28f79.firebaseio.com/products/${productId}.json?auth=${token}`,
 
       {
-        method: "DELETE"
+        method: "DELETE",
       }
     );
     if (!response.ok) {
@@ -67,19 +67,19 @@ export const createProduct = (title, description, imageURL, price) => {
     const token = getState().auth.token;
     const userId = getState().auth.userId;
     const response = await fetch(
-      `https://online-shop-28f79.firebaseio.com/products?auth=${token}`,
+      `https://online-shop-28f79.firebaseio.com/products.json?auth=${token}`,
       {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           title,
           description,
           imageURL,
           price,
-          ownerId: userId
-        })
+          ownerId: userId,
+        }),
       }
     );
 
@@ -93,8 +93,8 @@ export const createProduct = (title, description, imageURL, price) => {
         description,
         imageURL,
         price,
-        ownerId: userId
-      }
+        ownerId: userId,
+      },
     });
   };
 };
@@ -107,14 +107,14 @@ export const updateProduct = (id, title, description, imageURL, price) => {
       {
         method: "PATCH",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           title,
           description,
           imageURL,
-          price
-        })
+          price,
+        }),
       }
     );
 
@@ -128,7 +128,7 @@ export const updateProduct = (id, title, description, imageURL, price) => {
       productTitle: title,
       productDescription: description,
       productImageURL: imageURL,
-      productPrice: price
+      productPrice: price,
     });
   };
 };

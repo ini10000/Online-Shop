@@ -6,7 +6,7 @@ import {
   StyleSheet,
   Plaform,
   Alert,
-  ActivityIndicator
+  ActivityIndicator,
 } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { useSelector, useDispatch } from "react-redux";
@@ -22,11 +22,11 @@ const formReducer = (state, action) => {
   if (action.type === FORM_INPUT_UPDATE) {
     const updatedValues = {
       ...state.inputValues,
-      [action.input]: action.value
+      [action.input]: action.value,
     };
     const updatedValidities = {
       ...state.inputValidities,
-      [action.input]: action.isValid
+      [action.input]: action.isValid,
     };
 
     let updatedFormIsValid = true;
@@ -36,19 +36,19 @@ const formReducer = (state, action) => {
     return {
       formIsValid: updatedFormIsValid,
       inputValidities: updatedValidities,
-      inputValues: updatedValues
+      inputValues: updatedValues,
     };
   }
   return state;
 };
 
-const EditProductScreen = props => {
+const EditProductScreen = (props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
 
   const prodId = props.navigation.getParam("productId");
-  const editedProduct = useSelector(state =>
-    state.products.userProducts.find(prod => prod.id === prodId)
+  const editedProduct = useSelector((state) =>
+    state.products.userProducts.find((prod) => prod.id === prodId)
   );
   const dispatch = useDispatch();
 
@@ -57,15 +57,15 @@ const EditProductScreen = props => {
       title: editedProduct ? editedProduct.title : "",
       imageURL: editedProduct ? editedProduct.imageURL : "",
       description: editedProduct ? editedProduct.description : "",
-      price: editedProduct ? editedProduct.price : ""
+      price: editedProduct ? editedProduct.price : "",
     },
     inputValidities: {
       title: editedProduct ? true : false,
       imageURL: editedProduct ? true : false,
       description: editedProduct ? true : false,
-      price: editedProduct ? true : false
+      price: editedProduct ? true : false,
     },
-    formIsValid: editedProduct ? true : false
+    formIsValid: editedProduct ? true : false,
   });
 
   useEffect(() => {
@@ -77,7 +77,7 @@ const EditProductScreen = props => {
   const submitHandler = useCallback(async () => {
     if (!formState.formIsValid) {
       Alert.alert("Wrong Input!", "Please check the errors in the form.", [
-        { text: "Okay" }
+        { text: "Okay" },
       ]);
       return;
     }
@@ -121,7 +121,7 @@ const EditProductScreen = props => {
         type: FORM_INPUT_UPDATE,
         value: inputValue,
         isValid: inputValidity,
-        input: inputIdentifier
+        input: inputIdentifier,
       });
     },
     [dispatchFormState]
@@ -192,7 +192,7 @@ const EditProductScreen = props => {
             initialValue={editedProduct ? editedProduct.description : ""}
             initiallyValid={!!editedProduct}
             required
-            minLength={5}
+            minLength={2}
           />
         </View>
       </ScrollView>
@@ -200,7 +200,7 @@ const EditProductScreen = props => {
   );
 };
 
-EditProductScreen.navigationOptions = navData => {
+EditProductScreen.navigationOptions = (navData) => {
   const submitFn = navData.navigation.getParam("submit");
   return {
     headerTitle: navData.navigation.getParam("productId")
@@ -216,19 +216,19 @@ EditProductScreen.navigationOptions = navData => {
           onPress={submitFn}
         />
       </HeaderButtons>
-    )
+    ),
   };
 };
 
 const styles = StyleSheet.create({
   form: {
-    margin: 20
+    margin: 20,
   },
   loading: {
     flex: 1,
     justifyContent: "center",
-    alignItems: "center"
-  }
+    alignItems: "center",
+  },
 });
 
 export default EditProductScreen;
